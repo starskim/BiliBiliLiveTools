@@ -1,0 +1,18 @@
+{
+	"version": "0.0.1",
+	"debug": true,
+	"bilibiliInfo": {
+		"uid": "",
+		"username": "",
+		"password": "",
+		"access_token": "",
+		"refresh_token": ""
+	},
+	"StreamInfo": {
+		"room_id": ""
+	},
+	"DingTalk": {
+		"webhook": "",
+		"secret": ""
+	}
+}
