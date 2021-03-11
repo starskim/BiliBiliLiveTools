@@ -6,6 +6,8 @@
 
 # BiliBiliLiveTools
 
+**注意：本项目前仍然在开发中，但随时可能会咕的项目**
+
 ## 功能组件
 
 |plugin      |version  |description   |
@@ -32,6 +34,8 @@
 [BilibiliHelper](https://github.com/metowolf/BilibiliHelper) 
 
 [StreamerHelper](https://github.com/ZhangMingZhao1/StreamerHelper)
+
+[BiliHelper-personal](https://github.com/lkeme/BiliHelper-personal)
 
 ## License 许可证
 
