@@ -1,9 +1,6 @@
 import * as chalk from 'chalk'
 import * as log4js from "log4js"
 
-const DateInfo = new Date()
-const TimeString = DateInfo.toLocaleTimeString()
-
 log4js.configure({
     appenders: {
         console: {type: "console"},
@@ -22,14 +19,15 @@ log4js.configure({
         default: {appenders: ['console', 'default'], level: 'ALL'}
     }
 });
-export const logger = (name: string | undefined) => log4js.getLogger(name);
 
+export const logger = (name: string | undefined) => {
+    const logger = log4js.getLogger(name);
 
-export default {
-
-    debug: (message: any) => console.log(`${chalk.bgCyan('DEBUG')}[${chalk.cyan(TimeString)}] ${message}`),
-    info: (message: any) => console.log(`${chalk.bgCyan('INFO')}[${chalk.cyan(TimeString)}] ${message}`),
-    notice: (message: any) => console.log(`${chalk.bgGreen('NOTICE')}[${chalk.green(TimeString)}] ${message}`),
-    warning: (message: any) => console.log(`${chalk.bgYellow('WARNING')}[${chalk.yellow(TimeString)}] ${message}`),
-    error: (message: any) => console.log(`${chalk.bgRed('ERROR')}[${chalk.red(TimeString)}] ${message}`),
+    return {
+        debug: (message: any, context=[]) => logger.debug(`${chalk.cyan('DEBUG')} ${message} ${context}`),
+        info: (message: any, context=[]) => logger.info(`${chalk.cyan('INFO')} ${message} ${context}`),
+        notice: (message: any, context=[]) => logger.info(`${chalk.green('NOTICE')} ${message} ${context}`),
+        warning: (message: any, context=[]) => logger.warn(`${chalk.yellow('WARNING')} ${message} ${context}`),
+        error: (message: any, context=[]) => logger.error(`${chalk.red('ERROR')} ${message} ${context}`),
+    }
 }

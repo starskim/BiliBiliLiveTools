@@ -44,8 +44,6 @@ const main = async (content: string) => {
 
 export default (content: string) => {
     return main(content)
-        .catch(error => {
-            logger.error(error.message)
-        })
+        .catch(error => logger.error(error.message))
 }
 

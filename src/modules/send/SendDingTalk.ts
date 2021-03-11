@@ -8,17 +8,15 @@ let payload;
 
 const sendMsg = async (content: any) => {
     const timestamp = Date.now()
-    const sing = config.get('DingTalk.secret')
-    const hmac = encodeURIComponent(crypto.createHmac('sha256', sing).update(`${timestamp}\n${sing}`).digest('base64'))
+    const hmac = encodeURIComponent(crypto.createHmac('sha256', config.get('DingTalk.secret')).update(`${timestamp}\n${config.get('DingTalk.secret')}`).digest('base64'))
 
     payload = {
         msgtype: "text",
         text: {content}
     }
-    const body = await got.post(`${config.get('DingTalk.webhook')}&timestamp=${timestamp}&sign=${hmac}`, {
+    return got.post(`${config.get('DingTalk.webhook')}&timestamp=${timestamp}&sign=${hmac}`, {
         json: payload
-    }).json()
-    return body
+    }).json();
 }
 const privateSendMsg = async (content: string) => {
     const response = await sendMsg(content)

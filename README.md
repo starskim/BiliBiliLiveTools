@@ -12,10 +12,10 @@
 
 |plugin      |version  |description   |
 |------------|---------|------------- |
-|Auth        |21.03.10 |帐号登录组件    |
-|DanmuInfo   |Coding   |弹幕数据记录    |
-|SendDanMu   |21.03.10 |弹幕发送组件    |
-|SendDingTalk|21.03.10 |钉钉发送组件    |
+|Auth        |21.03.12 |帐号登录组件    |
+|DanmuInfo   |Coding   |弹幕数据组件    |
+|SendDanMu   |21.03.12 |弹幕发送组件    |
+|SendDingTalk|21.03.12 |钉钉发送组件    |
 
 ## 环境依赖
 

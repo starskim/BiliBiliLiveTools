@@ -18,7 +18,7 @@ const checkToken = async () => {
     }).json()
 
     if (body.code || body.data.expires_in < 14400) {
-        logger.warn('检测到 Token 需要更新')
+        logger.warning('检测到 Token 需要更新')
 
         const status = await refreshToken()
         if (!status) await loginPassword()
@@ -45,7 +45,7 @@ const refreshToken = async () => {
         config.set('bilibiliInfo.refresh_token', '')
         return false
     }
-    logger.info('Token 刷新成功')
+    logger.notice('Token 刷新成功')
     config.set('bilibiliInfo.access_token', body.data.access_token)
     config.set('bilibiliInfo.refresh_token', body.data.refresh_token)
     return true
@@ -98,7 +98,7 @@ const getPublicKey = async () => {
     }).json()
 
     if (body.code) throw new Error('公钥获取失败')
-    logger.info('公钥获取成功')
+    logger.notice('公钥获取成功')
     return body.data
 }
 
@@ -109,10 +109,10 @@ const checkCookie = async () => {
     const body = await getUserInfo();
 
     if (body.code !== 'REPONSE_OK') {
-        logger.warn('检测到 Cookie 已经过期')
+        logger.warning('检测到 Cookie 已经过期')
         logger.info('正在刷新 Cookie')
         await got.get('https://passport.bilibili.com/api/login/sso', {searchParams: sign({})})
-        logger.info('Cookie 刷新成功')
+        logger.notice('Cookie 刷新成功')
         await getUserInfo() // 获取UID，舰长经验检测有用到
     }
 }
@@ -139,7 +139,5 @@ const main = async () => {
 }
 
 export default () => {
-    return main().catch(error => {
-        logger.error(error.message)
-    })
+    return main().catch(error => logger.error(error.message))
 }

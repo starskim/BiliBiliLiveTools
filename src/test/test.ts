@@ -1,4 +1,10 @@
 // const Mirai = require('node-mirai-sdk');
+// import * as Live from 'bilibili-live-ws'
+// import got from "../utils/got"
+// import config from "../utils/config";
+const logger = require('../utils/logger').logger('测试')
+// import {getCsrf} from "../modules/User";
+import auth from "../modules/auth"
 
 
 // const bot = new Mirai({
@@ -26,6 +32,34 @@
 
 
 const test = async () => {
-
+    logger.debug('测试')
+    // const live = new Live.KeepLiveTCP(230890)
+    // live.on('live', () => logger.info('连接到直播间'))
+    // live.on('live', () => {
+    //     live.on('heartbeat', console.log)
+    //     live.on('send',console.log)
+    // })
+    // live.send(Buffer.from('测试'))
+    // const payload = `msg[sender_uid]=7805055&msg[receiver_id]=13684242&msg[receiver_type]=1&msg[msg_type]=1&msg[content]={'content':'hello'}&csrf_token=ef2c39f96ce4bf852db5baeeda4f20f5`;
+    // const msg=["sender_uid","receiver_id"]
+    // msg[sender_uid]='54897'
+    // const payload={}
+    // const user_info = await getCsrf();
+    //
+    // var payload = {
+    //     'msg[sender_uid]': config.get("bilibiliInfo.uid"),
+    //     'msg[receiver_id]': 13684242,
+    //     'msg[receiver_type]': 1,
+    //     'msg[msg_type]': 1,
+    //     'msg[content]': `{"content":"测试"}`,
+    //     'msg[timestamp]': Date.now(),
+    //     'msg[dev_id]': 'A3BD19D4-53C6-4C19-ABB1-EDF39C57444C',
+    //     csrf: user_info,
+    //     csrf_token: user_info
+    // }
+    // const body = await got.post('https://api.vc.bilibili.com/web_im/v1/web_im/send_msg', {
+    //     form: payload
+    // }).json()
+    await auth()
 };
 test()
