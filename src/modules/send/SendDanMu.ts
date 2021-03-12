@@ -1,7 +1,7 @@
 import got from "../../utils/got";
 import sign from "../../utils/sign";
 import {getCsrf} from '../user'
-import {getRoomId} from "../Live";
+import config from "../../utils/config";
 
 const logger = require('../../utils/logger').logger('SendDanMu')
 
@@ -10,7 +10,6 @@ let payload;
 const sendMsg = async (content: any) => {
 
     const user_info = await getCsrf();
-    const room_id = await getRoomId()
 
     payload = {
         color: 16777215,
@@ -18,7 +17,7 @@ const sendMsg = async (content: any) => {
         mode: 1,
         msg: content,
         rnd: 0,
-        roomid: room_id.data.room_id,
+        roomid: config.get('StreamInfo.room_id'),
         csrf: user_info,
         csrf_token: user_info,
     };
