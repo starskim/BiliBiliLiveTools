@@ -2,10 +2,13 @@
 // import * as Live from 'bilibili-live-ws'
 // import got from "../utils/got"
 // import config from "../utils/config";
-const logger = require('../utils/logger').logger('测试')
+// import sleep from "../utils/sleep";
 // import {getCsrf} from "../modules/User";
-import auth from "../modules/auth"
+// import auth from "../modules/auth"
+// import DanMuInfo from "../modules/DanMuInfo";
+import {getRoomInfo} from "../modules/Live";
 
+const logger = require('../utils/logger').logger('测试')
 
 // const bot = new Mirai({
 //     host: 'http://10.0.0.252:8081',
@@ -60,6 +63,12 @@ const test = async () => {
     // const body = await got.post('https://api.vc.bilibili.com/web_im/v1/web_im/send_msg', {
     //     form: payload
     // }).json()
-    await auth()
+    // await DanMuInfo()
+    // while (true) {
+    //     await auth()
+    //     await sleep(1000)
+    // }
+    await getRoomInfo()
+
 };
 test()

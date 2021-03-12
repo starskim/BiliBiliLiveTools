@@ -1,12 +1,16 @@
 import module_auth from "./modules/auth"
-import module_DanMuInfo from './modules/DanMuInfo'
 
 import init from "./utils/init"
+import {getRoomInfo} from "./modules/Live";
+import sleep from "./utils/sleep";
 
 const app = async () => {
     init()
-    await module_auth()
-    await module_DanMuInfo()
+    await getRoomInfo()
+    while (true) {
+        await module_auth()
+        await sleep(1000)
+    }
 
 };
 

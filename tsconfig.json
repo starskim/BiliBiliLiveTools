@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-     "incremental": true,                   /* 增量编译 提高编译速度*/
+     "incremental": false,                   /* 增量编译 提高编译速度*/
     "target": "ES2019"
     /* 编译目标ES版本*/,
     "module": "commonjs"
