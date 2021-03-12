@@ -1,15 +1,16 @@
 {
-	"version": "0.0.1",
+	"version": "0.0.0",
 	"debug": true,
 	"bilibiliInfo": {
-		"uid": "",
+		"uid": 0,
 		"username": "",
 		"password": "",
 		"access_token": "",
 		"refresh_token": ""
 	},
 	"StreamInfo": {
-		"room_id": ""
+		"uid": 0,
+		"room_id": 0
 	},
 	"DingTalk": {
 		"webhook": "",

@@ -6,20 +6,21 @@ const init = () => {
     if (config.get('version') !== version.version) {
         config.store = {
             version: version.version,
-            debug: true,
+            debug: process.env.DEBUG === 'true',
             bilibiliInfo: {
                 uid: '',
-                username: '',
-                password: '',
-                access_token: '',
-                refresh_token: '',
+                username: process.env.USERNAME || '',
+                password: process.env.PASSWORD || '',
+                access_token: process.env.ACCESS_TOKEN || '',
+                refresh_token: process.env.REFRESH_TOKEN || '',
             },
-            StreamInfo:{
-                room_id: '',
+            StreamInfo: {
+                uid: '',
+                room_id: process.env.ROOM_ID || '',
             },
             DingTalk: {
-                webhook: '',
-                secret: ''
+                webhook: process.env.DingTalkWebhook || '',
+                secret: process.env.DingTalksecret || ''
             },
         }
     }
