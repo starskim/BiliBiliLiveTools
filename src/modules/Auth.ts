@@ -1,9 +1,10 @@
 import * as crypto from 'crypto'
 import got from '../utils/got'
+import share from "../utils/share"
 import sign from "../utils/sign"
+const logger = require('../utils/logger').logger('Auth')
 import config from "../utils/config"
 
-const logger = require('../utils/logger').logger('Auth')
 let payload
 
 //检查 Token 是否过期
@@ -139,5 +140,11 @@ const main = async () => {
 }
 
 export default () => {
-    return main().catch(error => logger.error(error.message))
+    if (share.auth.lock > Date.now()) return
+    return main()
+        .then(() => share.auth.lock = Date.now() + 60 * 60 * 1000)
+        .catch(error => {
+            logger.error(error.message)
+            share.auth.lock = Date.now() + 10 * 60 * 1000
+        })
 }
