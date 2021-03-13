@@ -1,4 +1,5 @@
-<p align="center"><img width="300px" src="https://user-images.githubusercontent.com/2666735/57121590-30f97200-6dab-11e9-9a83-62098bea43d9.jpeg"></p>
+![BiliBiliLiveTools](https://socialify.git.ci/starskim/BiliBiliLiveTools/image?forks=1&issues=1&logo=https%3A%2F%2Fuser-images.githubusercontent.com%2F2666735%2F57121590-30f97200-6dab-11e9-9a83-62098bea43d9.jpeg&pulls=1&stargazers=1&theme=Light)
+
 <p align="center">
 <img src="https://img.shields.io/badge/version-develop-green.svg?longCache=true&style=for-the-badge">
 <img src="https://img.shields.io/badge/license-mit-blue.svg?longCache=true&style=for-the-badge">
@@ -22,7 +23,7 @@
 |Requirement|
 |-------|
 |Node.js (>=8.x)|
-|ffmpeg (>=4.x)|
+|FFmpeg (>=4.x)|
 
 ## 搭建指南
 
