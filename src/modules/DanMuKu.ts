@@ -1,0 +1,117 @@
+import SendDingTalk from "./send/SendDingTalk";
+
+const logger = require('../utils/logger').Danmu()
+const logger1 = require('../utils/logger').logger('DanMu_Debug')
+
+const main = async (msg: any, online: any) => {
+    let UserName
+    let isAdmin
+    let GiftName
+    let GiftCount
+    let UserGuardLevel
+    switch (msg.cmd) {
+        case 'LIVE':
+            // 直播开始
+            await SendDingTalk(`${msg.roomid} 开播了！！！！`)
+            await SendDingTalk(`${msg.roomid} 开播了！！！！`)
+            await SendDingTalk(`${msg.roomid} 开播了！！！！`)
+            break
+        case 'PREPARING':
+            // 直播结束
+            await SendDingTalk(`${msg.roomid} 下播了`)
+            break
+        case 'DANMU_MSG':
+            // 用户发送弹幕
+            isAdmin = msg.info[2][2] == 1
+            const isVIP = msg.info[2][3] == 1
+            UserName = msg.info[2][1]
+            const CommentText = msg.info[1]
+            logger.Comment(isAdmin, isVIP, UserName, CommentText)
+            break
+        case 'SEND_GIFT':
+        case 'COMBO_SEND':
+            // 礼物发送消息
+            GiftName = msg.data.giftName || msg.data.gift_num
+            UserName = msg.data.uname
+            GiftCount = msg.data.num || msg.data.batch_combo_num
+            logger.GiftSend(UserName, GiftName, GiftCount)
+            break
+        case 'NOTICE_MSG':
+            // 全区公告
+            logger.noticeMsg(msg.msg_common)
+            break
+        case 'ROOM_REAL_TIME_MESSAGE_UPDATE':
+            // 房间实时消息更新
+            logger.roomRealTimeMessage(msg.data.fans, msg.data.fans_club, online)
+            break
+        case 'WELCOME':
+            // 老爷进信息
+            UserName = msg.data.username
+            isAdmin = msg.data.isadmin == 1
+            logger.Welcome(isAdmin, UserName)
+            break
+        case 'WELCOME_GUARD':
+            UserName = msg.data.username
+            UserGuardLevel = msg.data.guard_level
+            logger.WelcomeGuard(UserGuardLevel, UserName)
+            break
+        case 'ENTRY_EFFECT':
+            logger1.debug('舰长进入直播信息')
+            console.log(msg)
+            break
+        case "GUARD_BUY":
+            // 上舰长消息
+            UserName = msg.data.username
+            UserGuardLevel = msg.data.guard_level
+            GiftName = UserGuardLevel == 3 ? "舰长" :
+                UserGuardLevel == 2 ? "提督" :
+                    UserGuardLevel == 1 ? "总督" : ""
+            GiftCount = msg.data.num
+            logger.GuardBuy(UserName, GiftName, GiftCount)
+            break
+        case "SUPER_CHAT_MESSAGE":
+        case "SUPER_CHAT_MESSAGE_JPN":
+            // 醒目留言
+            console.log(msg)
+            // CommentText = msg.data.message
+            // UserName = msg.data.user_info.uname
+            // const Price = msg.data.price
+            // const SCKeepTime = msg.data.time
+            // logger.SuperChat(CommentText)
+            break
+        case 'INTERACT_WORD':
+            // 观众互动信息
+            const InteractType = msg.data.msg_type
+            UserName = msg.data.uname
+            logger.Interact(InteractType, UserName, msg.data.spread_desc)
+            break
+        case 'WARNING':
+            // 超管警告
+            console.log(msg)
+            logger.warning(`超管警告：${msg.msg}`)
+            logger.warning(`超管警告：${msg.msg}`)
+            logger.warning(`超管警告：${msg.msg}`)
+            await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            break
+        case 'CUT_OFF':
+            // 超管切断
+            console.log(msg)
+            logger.warning(`超管切断直播：${msg.msg}`)
+            logger.warning(`超管切断直播：${msg.msg}`)
+            logger.warning(`超管切断直播：${msg.msg}`)
+            await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            break
+        default:
+            console.log(msg)
+            break
+    }
+
+}
+
+export default (msg: any, online: any) => {
+    return main(msg, online)
+}

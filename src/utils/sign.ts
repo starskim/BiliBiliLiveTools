@@ -3,7 +3,7 @@ const crypto = require('crypto')
 import config from "./config"
 
 //签名
-const sign = (data: { access_token?: any; refresh_token?: any; seccode?: string; validate?: string; subid?: number; permission?: string; username?: any; password?: string; captcha?: string; challenge?: string; id?: any; color?: number; fontsize?: number; mode?: number; msg?: any; rnd?: number; roomid?: any; csrf?: string; csrf_token?: string; sign?: any }) => {
+const sign = (data:any) => {
 
     const appkey = 'aae92bc66f3edfab'
     const appsecret = 'af125a0d5279fd576c1b4418a3e8276d'
