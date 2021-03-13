@@ -31,7 +31,7 @@ const main = async (msg: any, online: any) => {
         case 'SEND_GIFT':
         case 'COMBO_SEND':
             // 礼物发送消息
-            GiftName = msg.data.giftName || msg.data.gift_num
+            GiftName = msg.data.giftName || msg.data.gift_name
             UserName = msg.data.uname
             GiftCount = msg.data.num || msg.data.batch_combo_num
             logger.GiftSend(UserName, GiftName, GiftCount)
