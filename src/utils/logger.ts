@@ -57,36 +57,52 @@ const Danmu = () => {
         GiftSend(UserName: unknown, giftName: unknown, GiftCount: unknown) {
             logger.info(`收到道具：${chalk.magenta(UserName)} 贈送的: ${chalk.yellow(giftName)} x ${chalk.red(GiftCount)}`);
         },
-        noticeMsg(CommentText: string) {
+        AnchorLotStart(giftName: unknown, GiftCount: unknown){
+            logger.info('天选抽奖开始，奖励' + chalk.green(giftName) + '数量' + chalk.red(GiftCount))
+        },
+        AnchorLotEnd(){
+            logger.info('天选抽奖结束!!!!')
+        },
+        NoticeMsg(CommentText: string) {
             logger.info(chalk.yellow(CommentText.replace(/%/g, "")))
         },
+        OnlineRankCount(count: any){
+            logger.info(`当前高能榜共${chalk.red(count)}位`)
+        },
+        HotRankChanged(area_name: any, rank: any){
+            logger.info(`主播当前${area_name}分榜排名${chalk.red(rank)}位`)
+        },
         Welcome(isAdmin: any, UserName: any){
-            const text = isAdmin ? `欢迎老爷 ${UserName} 进入直播间` : `欢迎老爷和管理员 ${UserName} 进入直播间`;
+            const text = isAdmin ? `欢迎老爷 ${chalk.cyan(UserName)} 进入直播间` : `欢迎老爷和管理员 ${chalk.cyan(UserName)} 进入直播间`;
             logger.info(text)
         },
         WelcomeGuard(UserGuardLevel: any, UserName: any){
             let guard_text
+            let guard_name
             switch (UserGuardLevel) {
                 case 1:
                     guard_text = "总督"
+                    guard_name =chalk.red(UserName)
                     break;
                 case 2:
                     guard_text = "提督"
+                    guard_name =chalk.yellow(UserName)
                     break;
                 case 3:
                     guard_text = "舰长"
+                    guard_name =chalk.green(UserName)
                     break;
             }
-            logger.info(`欢迎${guard_text}: ${UserName} 进入直播间`)
+            logger.info(`欢迎${guard_text}: ${guard_name} 进入直播间`)
         },
         GuardBuy(UserName: any, GiftName: any, GiftCount: any) {
-            logger.info(`上船:${UserName} 購買了 ${GiftName} x ${GiftCount}`)
+            logger.info(`上船:${chalk.green(UserName)} 购买了 ${chalk.yellow(GiftName)} x ${chalk.red(GiftCount)}`)
         },
-        roomRealTimeMessage(fans: any, fans_club: any, online: any) {
+        RoomRealTimeMessage(fans: any, fans_club: any, online: any) {
             logger.info(`被动信息更新:粉丝数${chalk.green(fans)},粉丝团成员数${chalk.red(fans_club)}当前房间人气${chalk.yellow(online)}`);
         },
-        SuperChat(){
-
+        SuperChat(UserName: any, Price: any, CommentText: any, SCKeepTime: any){
+            logger.info(`${chalk.red(`!!!SuperChat!!!`)}${UserName} ￥:${Price}${CommentText}${SCKeepTime}`)
         },
         Interact(InteractType: any, UserName: unknown, spread_desc: unknown) {
             switch (InteractType) {

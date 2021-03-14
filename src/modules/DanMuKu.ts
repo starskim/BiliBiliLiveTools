@@ -1,7 +1,7 @@
 import SendDingTalk from "./send/SendDingTalk";
 
 const logger = require('../utils/logger').Danmu()
-const logger1 = require('../utils/logger').logger('DanMu_Debug')
+// const logger1 = require('../utils/logger').logger('DanMu_Debug')
 
 const main = async (msg: any, online: any) => {
     let UserName
@@ -9,6 +9,7 @@ const main = async (msg: any, online: any) => {
     let GiftName
     let GiftCount
     let UserGuardLevel
+    let CommentText
     switch (msg.cmd) {
         case 'LIVE':
             // 直播开始
@@ -25,7 +26,7 @@ const main = async (msg: any, online: any) => {
             isAdmin = msg.info[2][2] == 1
             const isVIP = msg.info[2][3] == 1
             UserName = msg.info[2][1]
-            const CommentText = msg.info[1]
+            CommentText = msg.info[1]
             logger.Comment(isAdmin, isVIP, UserName, CommentText)
             break
         case 'SEND_GIFT':
@@ -36,28 +37,54 @@ const main = async (msg: any, online: any) => {
             GiftCount = msg.data.num || msg.data.batch_combo_num
             logger.GiftSend(UserName, GiftName, GiftCount)
             break
+        case 'ANCHOR_LOT_START':
+            console.log(msg)
+            GiftName = msg.data.award_name
+            GiftCount = msg.data.award_num
+            logger.AnchorLotStart(GiftName, GiftCount)
+            break
+        case 'ANCHOR_LOT_END':
+            logger.AnchorLotEnd()
+            console.log(msg)
+            break
         case 'NOTICE_MSG':
             // 全区公告
-            logger.noticeMsg(msg.msg_common)
+            CommentText = msg.msg_common
+            logger.NoticeMsg(CommentText)
             break
         case 'ROOM_REAL_TIME_MESSAGE_UPDATE':
             // 房间实时消息更新
-            logger.roomRealTimeMessage(msg.data.fans, msg.data.fans_club, online)
+            logger.RoomRealTimeMessage(msg.data.fans, msg.data.fans_club, online)
+            break
+        case 'ONLINE_RANK_COUNT':
+            // 高能榜
+            logger.OnlineRankCount(msg.data.count)
+            break
+        case 'HOT_RANK_CHANGED':
+            // 热门分榜
+            const area_name = msg.data.area_name
+            const rank = msg.data.rank
+            logger.HotRankChanged(area_name, rank)
             break
         case 'WELCOME':
-            // 老爷进信息
+            // 老爷进入信息
             UserName = msg.data.username
             isAdmin = msg.data.isadmin == 1
             logger.Welcome(isAdmin, UserName)
             break
         case 'WELCOME_GUARD':
+            // 舰长进入信息1
             UserName = msg.data.username
             UserGuardLevel = msg.data.guard_level
             logger.WelcomeGuard(UserGuardLevel, UserName)
             break
         case 'ENTRY_EFFECT':
-            logger1.debug('舰长进入直播信息')
-            console.log(msg)
+            // 舰长进入信息2
+            const msgs = msg.data.copy_writing
+            const match = msgs.match(/<%(.+?)%>/)
+            UserName = match[1]
+            UserGuardLevel = msg.data.privilege_type
+            logger.WelcomeGuard(UserGuardLevel, UserName)
             break
         case "GUARD_BUY":
             // 上舰长消息
@@ -73,11 +100,11 @@ const main = async (msg: any, online: any) => {
         case "SUPER_CHAT_MESSAGE_JPN":
             // 醒目留言
             console.log(msg)
-            // CommentText = msg.data.message
-            // UserName = msg.data.user_info.uname
-            // const Price = msg.data.price
-            // const SCKeepTime = msg.data.time
-            // logger.SuperChat(CommentText)
+            CommentText = msg.data.message
+            UserName = msg.data.user_info.uname
+            const Price = msg.data.price
+            const SCKeepTime = msg.data.time
+            logger.SuperChat(UserName,Price,CommentText,SCKeepTime)
             break
         case 'INTERACT_WORD':
             // 观众互动信息
