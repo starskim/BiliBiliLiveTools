@@ -5,8 +5,7 @@
 // import sleep from "../utils/sleep";
 // import {getCsrf} from "../modules/User";
 // import auth from "../modules/auth"
-import DanMuInfo from "../modules/DanMuInfo";
-import {getRoomInfo} from "../modules/Live";
+import Live from "../modules/Live";
 
 const logger = require('../utils/logger').logger('测试')
 
@@ -63,8 +62,7 @@ const test = async () => {
     // const body = await got.post('https://api.vc.bilibili.com/web_im/v1/web_im/send_msg', {
     //     form: payload
     // }).json()
-    await getRoomInfo()
-    await DanMuInfo()
+    await Live()
     // while (true) {
     //     await auth()
     //     await sleep(1000)

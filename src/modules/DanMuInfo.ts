@@ -18,5 +18,5 @@ const main = () => {
 }
 
 export default () => {
-    return main()
+    main()
 }

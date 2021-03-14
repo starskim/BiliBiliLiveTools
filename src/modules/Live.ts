@@ -1,8 +1,22 @@
 import got from "../utils/got"
 import config from "../utils/config"
 import sign from "../utils/sign"
+import DanMuInfo from "../modules/DanMuInfo";
+
+
+const logger = require('../utils/logger').logger('Live')
 
 let payload;
+
+//检查登录
+const checkRoomId = async () => {
+    logger.info('检查直播房间号')
+    const room_id = config.get('StreamInfo.room_id')
+    if (room_id === "") {
+        throw new Error('空白直播房间号')
+    }
+    await getRoomInfo()
+}
 
 //获取直播间信息
 const getRoomInfo = async () => {
@@ -13,8 +27,9 @@ const getRoomInfo = async () => {
     // 直播短号转长号
     if (body.data.room_id !== config.get('StreamInfo.room_id')) config.set('StreamInfo.room_id', body.data.room_id)
     if (body.data.uid !== config.get('StreamInfo.uid')) config.set('StreamInfo.uid', body.data.uid)
+    DanMuInfo()
 }
 
-export {
-    getRoomInfo
+export default () => {
+    checkRoomId().catch(error => logger.error(error.message))
 }

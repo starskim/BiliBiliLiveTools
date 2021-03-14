@@ -2,8 +2,9 @@ import * as crypto from 'crypto'
 import got from '../utils/got'
 import share from "../utils/share"
 import sign from "../utils/sign"
-const logger = require('../utils/logger').logger('Auth')
 import config from "../utils/config"
+
+const logger = require('../utils/logger').logger('Auth')
 
 let payload
 
@@ -22,7 +23,7 @@ const checkToken = async () => {
         logger.warning('检测到 Token 需要更新')
 
         const status = await refreshToken()
-        if (!status) await loginPassword()
+        if (!status) await checkLogin()
     }
 }
 
@@ -52,7 +53,16 @@ const refreshToken = async () => {
     return true
 }
 
-//账密登录
+//检查登录
+const checkLogin = async () => {
+    logger.info('检查登录')
+    const user = config.get('bilibiliInfo.username')
+    const pass = config.get('bilibiliInfo.password')
+    if (user === "" || pass === "") throw new Error('空白的帐号和口令')
+    await loginPassword()
+}
+
+// 账密登录
 const loginPassword = async () => {
     const data = await getPublicKey()
 
