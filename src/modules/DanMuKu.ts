@@ -38,12 +38,14 @@ const main = async (msg: any, online: any) => {
             logger.GiftSend(UserName, GiftName, GiftCount)
             break
         case 'ANCHOR_LOT_START':
+            // 天选抽奖开始
             console.log(msg)
             GiftName = msg.data.award_name
             GiftCount = msg.data.award_num
             logger.AnchorLotStart(GiftName, GiftCount)
             break
         case 'ANCHOR_LOT_END':
+            // 天选抽奖结束
             logger.AnchorLotEnd()
             console.log(msg)
             break
