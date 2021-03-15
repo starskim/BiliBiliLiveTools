@@ -101,12 +101,15 @@ const main = async (msg: any, online: any) => {
         case "SUPER_CHAT_MESSAGE":
         case "SUPER_CHAT_MESSAGE_JPN":
             // 醒目留言
-            console.log(msg)
             CommentText = msg.data.message
             UserName = msg.data.user_info.uname
             const Price = msg.data.price
             const SCKeepTime = msg.data.time
-            logger.SuperChat(UserName,Price,CommentText,SCKeepTime)
+            logger.SuperChat(UserName, Price, CommentText, SCKeepTime)
+            break
+        case 'SUPER_CHAT_MESSAGE_DELETE':
+            // 醒目留言删除
+            console.log(msg)
             break
         case 'INTERACT_WORD':
             // 观众互动信息
@@ -133,6 +136,9 @@ const main = async (msg: any, online: any) => {
             await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
             await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
             await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            break
+        case 'WIDGET_BANNER':
+        case 'ONLINE_RANK_V2':
             break
         default:
             console.log(msg)
