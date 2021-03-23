@@ -1,7 +1,7 @@
 ![BiliBiliLiveTools](https://socialify.git.ci/starskim/BiliBiliLiveTools/image?forks=1&issues=1&logo=https%3A%2F%2Fuser-images.githubusercontent.com%2F2666735%2F57121590-30f97200-6dab-11e9-9a83-62098bea43d9.jpeg&pulls=1&stargazers=1&theme=Light)
 
 <p align="center">
-<img src="https://img.shields.io/badge/version-develop-green.svg?longCache=true&style=for-the-badge">
+<img src="https://img.shields.io/badge/version-dev_0.0.1-green.svg?longCache=true&style=for-the-badge">
 <img src="https://img.shields.io/badge/license-mit-blue.svg?longCache=true&style=for-the-badge">
 </p>
 
