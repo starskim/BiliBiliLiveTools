@@ -103,3 +103,5 @@ dist
 # TernJS port file
 .tern-port
 cookie.json
+src/test/monitors.ts
+src/test/monitors2.ts

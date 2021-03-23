@@ -1,11 +1,13 @@
 // const Mirai = require('node-mirai-sdk');
+// const crypto = require('crypto')
 // import * as Live from 'bilibili-live-ws'
 // import got from "../utils/got"
+// import sign from "../utils/sign"
 // import config from "../utils/config";
 // import sleep from "../utils/sleep";
 // import {getCsrf} from "../modules/User";
 // import auth from "../modules/auth"
-import Live from "../modules/Live";
+// import Live from "../modules/Live";
 
 const logger = require('../utils/logger').logger('测试')
 
@@ -47,7 +49,7 @@ const test = async () => {
     // msg[sender_uid]='54897'
     // const payload={}
     // const user_info = await getCsrf();
-    //
+
     // var payload = {
     //     'msg[sender_uid]': config.get("bilibiliInfo.uid"),
     //     'msg[receiver_id]': 13684242,
@@ -62,7 +64,32 @@ const test = async () => {
     // const body = await got.post('https://api.vc.bilibili.com/web_im/v1/web_im/send_msg', {
     //     form: payload
     // }).json()
-    await Live()
+    // const mac = [
+    //     (0x52).toString(16),
+    //     (0x54).toString(16),
+    //     (0x00).toString(16),
+    //     Math.floor((Math.random() * 0xff)).toString(16),
+    //     Math.floor((Math.random() * 0xff)).toString(16),
+    //     Math.floor((Math.random() * 0xff)).toString(16)
+    // ]
+    // logger.debug(mac.join(':'))
+    // const md5 = crypto.createHash('md5').update(mac.join(':')).digest('hex')
+    // logger.debug(md5)
+    // const md5_arr = md5.split('')
+    // const Buvid = `XY${md5_arr[2]}${md5_arr[12]}${md5_arr[22]}${md5}`
+    // logger.debug(Buvid.toUpperCase())
+    // const payload = {
+    //     room_id: '12018181',
+    //     title: '测试',
+    //     csrf: user_info
+    // }
+    // const body = await got.post('http://api.live.bilibili.com/room/v1/Room/update',
+    //     {
+    //         form: payload
+    //     },
+    // ).json()
+    // logger.debug(JSON.stringify(body))
+    // await Live()
     // while (true) {
     //     await auth()
     //     await sleep(1000)
