@@ -17,6 +17,8 @@ const init = () => {
             StreamInfo: {
                 uid: '',
                 room_id: process.env.ROOM_ID || '',
+                uploadLocalFile: true,
+                deleteLocalFile: false
             },
             DingTalk: {
                 webhook: process.env.DingTalkWebhook || '',

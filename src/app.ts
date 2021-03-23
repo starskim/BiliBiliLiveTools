@@ -3,6 +3,7 @@ import module_auth from "./modules/auth"
 import init from "./utils/init"
 import module_live from "./modules/Live"
 import sleep from "./utils/sleep"
+
 const logger = require('./utils/logger').logger('App')
 
 const app = async () => {

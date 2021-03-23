@@ -6,7 +6,7 @@ const logger = require('../../utils/logger').logger('SendDingTalk')
 
 let payload;
 
-const sendMsg = async (content: any) => {
+const sendMsg = async (content: string) => {
     const timestamp = Date.now()
     const hmac = encodeURIComponent(crypto.createHmac('sha256', config.get('DingTalk.secret')).update(`${timestamp}\n${config.get('DingTalk.secret')}`).digest('base64'))
 

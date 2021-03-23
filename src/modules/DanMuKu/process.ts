@@ -1,7 +1,7 @@
-import SendDingTalk from "./send/SendDingTalk";
+import SendDingTalk from "../send/SendDingTalk";
 
-const logger = require('../utils/logger').Danmu()
-// const logger1 = require('../utils/logger').logger('DanMu_Debug')
+const logger = require('../../utils/logger').Danmu()
+const logger1 = require('../../utils/logger').logger('DanMu_Debug')
 
 const main = async (msg: any, online: any) => {
     let UserName
@@ -39,7 +39,7 @@ const main = async (msg: any, online: any) => {
             break
         case 'ANCHOR_LOT_START':
             // 天选抽奖开始
-            console.log(msg)
+            logger1.debug(JSON.stringify(msg))
             GiftName = msg.data.award_name
             GiftCount = msg.data.award_num
             logger.AnchorLotStart(GiftName, GiftCount)
@@ -47,7 +47,7 @@ const main = async (msg: any, online: any) => {
         case 'ANCHOR_LOT_END':
             // 天选抽奖结束
             logger.AnchorLotEnd()
-            console.log(msg)
+            logger1.debug(JSON.stringify(msg))
             break
         case 'NOTICE_MSG':
             // 全区公告
@@ -62,8 +62,14 @@ const main = async (msg: any, online: any) => {
             // 高能榜
             logger.OnlineRankCount(msg.data.count)
             break
+        case 'ONLINE_RANK_V2':
+            // 高能榜更新
+            break
+        case 'ONLINE_RANK_TOP3':
+            // 高能榜前三
+            break
         case 'HOT_RANK_CHANGED':
-            // 热门分榜
+            // 热门榜
             const area_name = msg.data.area_name
             const rank = msg.data.rank
             logger.HotRankChanged(area_name, rank)
@@ -98,6 +104,9 @@ const main = async (msg: any, online: any) => {
             GiftCount = msg.data.num
             logger.GuardBuy(UserName, GiftName, GiftCount)
             break
+        case 'USER_TOAST_MSG':
+            logger1.debug(JSON.stringify(msg))
+            break
         case "SUPER_CHAT_MESSAGE":
         case "SUPER_CHAT_MESSAGE_JPN":
             // 醒目留言
@@ -109,7 +118,7 @@ const main = async (msg: any, online: any) => {
             break
         case 'SUPER_CHAT_MESSAGE_DELETE':
             // 醒目留言删除
-            console.log(msg)
+            logger1.debug(JSON.stringify(msg))
             break
         case 'INTERACT_WORD':
             // 观众互动信息
@@ -119,7 +128,6 @@ const main = async (msg: any, online: any) => {
             break
         case 'WARNING':
             // 超管警告
-            console.log(msg)
             logger.warning(`超管警告：${msg.msg}`)
             logger.warning(`超管警告：${msg.msg}`)
             logger.warning(`超管警告：${msg.msg}`)
@@ -129,19 +137,16 @@ const main = async (msg: any, online: any) => {
             break
         case 'CUT_OFF':
             // 超管切断
-            console.log(msg)
+            logger1.debug(JSON.stringify(msg))
             logger.warning(`超管切断直播：${msg.msg}`)
             logger.warning(`超管切断直播：${msg.msg}`)
             logger.warning(`超管切断直播：${msg.msg}`)
             await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
             await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
             await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
-            break
-        case 'WIDGET_BANNER':
-        case 'ONLINE_RANK_V2':
             break
         default:
-            console.log(msg)
+            logger1.debug(JSON.stringify(msg))
             break
     }
 

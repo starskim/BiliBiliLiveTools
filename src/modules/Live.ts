@@ -1,7 +1,7 @@
 import got from "../utils/got"
 import config from "../utils/config"
 import sign from "../utils/sign"
-import DanMuInfo from "../modules/DanMuInfo";
+import DanMuInfo from "./DanMuKu";
 
 
 const logger = require('../utils/logger').logger('Live')

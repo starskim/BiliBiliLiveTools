@@ -67,16 +67,22 @@ const Danmu = () => {
             logger.info(chalk.yellow(CommentText.replace(/%/g, "")))
         },
         OnlineRankCount(count: any) {
-            logger.info(`当前高能榜共${chalk.red(count)}位`)
+            logger.info(`高能榜更新,当前有${chalk.red(count)}个用户在榜上`)
         },
         HotRankChanged(area_name: any, rank: any) {
-            logger.info(`主播当前${area_name}分榜排名${chalk.red(rank)}位`)
+            if (area_name === '总榜') {
+                if (rank !== 0) {
+                    logger.info(`主播当前${area_name}排名${chalk.red(rank)}位`)
+                }
+            } else {
+                logger.info(`主播当前${area_name}分榜排名${chalk.red(rank)}位`)
+            }
         },
         Welcome(isAdmin: any, UserName: any) {
             const text = isAdmin ? `欢迎老爷 ${chalk.cyan(UserName)} 进入直播间` : `欢迎老爷和管理员 ${chalk.cyan(UserName)} 进入直播间`;
             logger.info(text)
         },
-        WelcomeGuard(UserGuardLevel: any, UserName: any){
+        WelcomeGuard(UserGuardLevel: any, UserName: any) {
             let guard_text
             let guard_name
             switch (UserGuardLevel) {
