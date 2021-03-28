@@ -17,12 +17,20 @@ const init = () => {
             StreamInfo: {
                 uid: '',
                 room_id: process.env.ROOM_ID || '',
-                uploadLocalFile: true,
-                deleteLocalFile: false
+            },
+            UploaderInfo: {
+                name: process.env.UNAME || '',
+                lines: process.env.LINES || "AUTO",
+                threads: process.env.THREADS || 3,
+                uploadLocalFile: process.env.UPLOADLOCALFILE || true,
+                deleteLocalFile: process.env.DELETELOCALFILE || false,
+                videoPartLimitSize: process.env.VIDEOPARTLIMITSIZE || 100,
+                tid: process.env.TID || 27,
+                tags: process.env.TAGS ? process.env.TAGS.split(',') : [],
             },
             DingTalk: {
-                webhook: process.env.DingTalkWebhook || '',
-                secret: process.env.DingTalksecret || ''
+                webhook: process.env.DINGTALKWEBHOOK || '',
+                secret: process.env.DINGTALKSECRET || '',
             },
         }
     }

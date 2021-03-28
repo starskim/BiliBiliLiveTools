@@ -12,6 +12,16 @@
 		"uid": 0,
 		"room_id": 0
 	},
+	"UploaderInfo": {
+		"uname": "",
+		"lines": "AUTO",
+		"threads": 3,
+		"uploadLocalFile": true,
+		"deleteLocalFile": true,
+		"videoPartLimitSize": 100,
+		"tid": 27,
+		"tags": ["录播", "直播录像"]
+	},
 	"DingTalk": {
 		"webhook": "",
 		"secret": ""
