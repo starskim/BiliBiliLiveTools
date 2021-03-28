@@ -3,11 +3,15 @@
 // import * as Live from 'bilibili-live-ws'
 // import got from "../utils/got"
 // import sign from "../utils/sign"
-// import config from "../utils/config";
-// import sleep from "../utils/sleep";
-// import {getCsrf} from "../modules/User";
+import config from "../utils/config"
+// import sleep from "../utils/sleep"
+// import {getCsrf} from "../modules/User"
 // import auth from "../modules/auth"
-// import Live from "../modules/Live";
+// import Live from "../modules/Live"
+import * as fs from "fs"
+// import auth from "../modules/Auth"
+// import uploader from "../modules/uploader"
+import * as chalk from 'chalk'
 
 const logger = require('../utils/logger').logger('测试')
 
@@ -37,6 +41,7 @@ const logger = require('../utils/logger').logger('测试')
 
 const test = async () => {
     logger.debug('测试')
+    // await auth()
     // const live = new Live.KeepLiveTCP(230890)
     // live.on('live', () => logger.info('连接到直播间'))
     // live.on('live', () => {
@@ -94,5 +99,43 @@ const test = async () => {
     //     await auth()
     //     await sleep(1000)
     // }
+    let fileSize = fs.statSync(`/Volumes/Record/bilibili_record/54897-Ruriko琉璃子Channel/20210324/06P.mp4`).size
+    // const chunkSize = 5 * 1024 * 1024 //每 chunk 5M
+    // const chunkNum = Math.ceil(fileSize / chunkSize)
+    logger.debug(fileSize)
+    // logger.debug(chunkSize)
+    // logger.debug(fileSize / chunkSize)
+    // logger.debug(chunkNum)
+    // const {data: {myinfo}} = await got.get('https://member.bilibili.com/x/web/archive/pre?lang=cn').json()
+    // const {data} = await got.get('https://member.bilibili.com/x/web/index/stat').json()
+    // myinfo.total_info = data
+    // let user_weight
+    // if (myinfo.level > 3 && myinfo.total_info && myinfo.total_info.total_fans > 100) {
+    //     user_weight = 2
+    // } else {
+    //     user_weight = 1
+    // }
+    // if (user_weight == 2) {
+    //     logger.info(`用户权重: ${user_weight} => 网页端分p数量不受限制使用网页端api提交`)
+    // }
+    // logger.info(`用户权重: ${user_weight} => 网页端分p数量受到限制使用客户端api端提交`)
+    // logger.debug(JSON.stringify(myinfo['total_info']['data']))
+    logger.debug(process.env.TAGS)
+    const tags = process.env.TAGS ? process.env.TAGS.split(',') : [];
+    console.log(tags)
+    logger.debug(`是否删除本地文件 ${
+        config.get('UploaderInfo.deleteLocalFile') ? chalk.yellow('是') : chalk.red('否')
+    }`)
+    logger.debug(`是否上传本地文件 ${
+        config.get('UploaderInfo.uploadLocalFile') ? chalk.yellow('是') : chalk.red('否')
+    }`)
+    if (config.get('UploaderInfo.uploadLocalFile')){
+        logger.debug('稿件')
+    }
+    console.log(config.get('UploaderInfo.tags'))
+    // logger.debug(tags)
+    // config.set('UploaderInfo.tags', process.env.TAGS.split(','))
+    // await uploader()
+
 };
 test()
