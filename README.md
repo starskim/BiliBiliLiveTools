@@ -28,6 +28,9 @@
 
 ## 搭建指南
 
+## B站分区tid号码查询
+
+[Bilibili分区列表](https://github.com/FortuneDayssss/BilibiliUploader/wiki/Bilibili%E5%88%86%E5%8C%BA%E5%88%97%E8%A1%A8)
 
 ## 本项目参考以下项目开发
 
@@ -35,9 +38,13 @@
 
 [BilibiliHelper](https://github.com/metowolf/BilibiliHelper) 
 
+[BiliHelper-personal](https://github.com/lkeme/BiliHelper-personal)
+
 [StreamerHelper](https://github.com/ZhangMingZhao1/StreamerHelper)
 
-[BiliHelper-personal](https://github.com/lkeme/BiliHelper-personal)
+[BilibiliUploader](https://github.com/FortuneDayssss/BilibiliUploader)
+
+[bilibiliupload](https://github.com/ForgQi/bilibiliupload)
 
 ## License 许可证
 
