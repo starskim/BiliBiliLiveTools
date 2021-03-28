@@ -1,5 +1,8 @@
 import * as chalk from 'chalk'
 import * as log4js from "log4js"
+import config from "../utils/config"
+
+const logStatus = config.get('debug') ? "debug" : "info";
 
 log4js.configure({
     appenders: {
@@ -16,7 +19,7 @@ log4js.configure({
         },
     },
     categories: {
-        default: {appenders: ['console', 'default'], level: 'ALL'}
+        default: {appenders: ['console', 'default'], level: logStatus}
     }
 });
 

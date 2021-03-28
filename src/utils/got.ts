@@ -1,6 +1,5 @@
 const got = require('got')
 import * as chalk from 'chalk'
-import config from "../utils/config"
 
 const logger = require('../utils/logger').logger('Got')
 
@@ -23,15 +22,13 @@ const _got = got.extend({
     hooks: {
         beforeRequest: [
             (options: { headers: any; method: any; url: any; }) => {
-                if (config.get('debug')) {
-                    // logger.debug(options.headers)
-                    logger.debug(`${chalk.cyan(options.method)} ${chalk.yellow(options.url)}`)
-                }
+                // logger.debug(options.headers)
+                logger.debug(`${chalk.cyan(options.method)} ${chalk.yellow(options.url)}`)
             }
         ],
         afterResponse: [
             (response: { body: string | any[]; }) => {
-                if (config.get('debug') && response.body.length < 1000) logger.debug(chalk.gray(response.body))
+                if (response.body.length < 1000) logger.debug(chalk.gray(response.body))
                 return response
             }
         ]
