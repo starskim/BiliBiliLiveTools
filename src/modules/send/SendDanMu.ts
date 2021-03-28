@@ -1,6 +1,6 @@
 import got from "../../utils/got";
 import sign from "../../utils/sign";
-import {getCsrf} from '../user'
+import {getCsrf} from '../User'
 import config from "../../utils/config";
 
 const logger = require('../../utils/logger').logger('SendDanMu')
