@@ -19,14 +19,16 @@ const init = () => {
                 room_id: process.env.ROOM_ID || '',
             },
             UploaderInfo: {
-                name: process.env.UNAME || '',
-                lines: process.env.LINES || "AUTO",
-                threads: process.env.THREADS || 3,
                 uploadLocalFile: process.env.UPLOADLOCALFILE || true,
                 deleteLocalFile: process.env.DELETELOCALFILE || false,
                 videoPartLimitSize: process.env.VIDEOPARTLIMITSIZE || 100,
+                copyright: process.env.COPYRIGHT || 2,
+                title: process.env.TITLE || '',
                 tid: process.env.TID || 27,
-                tags: process.env.TAGS ? process.env.TAGS.split(',') : [],
+                tags: process.env.TAGS ? process.env.TAGS.split(',') : ['录播', '直播录像'],
+                desc: process.env.DESC || '',
+                no_reprint: process.env.NO_REPRINT || 1,
+                open_elec: process.env.OPEN_ELEC || 0
             },
             DingTalk: {
                 webhook: process.env.DINGTALKWEBHOOK || '',

@@ -5,6 +5,7 @@ import {getCsrf} from "../User"
 import config from "../../utils/config"
 import * as chalk from 'chalk'
 import got from "../../utils/got"
+import sign from "../../utils/sign"
 import * as crypto from 'crypto'
 import sleep from "../../utils/sleep"
 import * as FormData from 'form-data'
@@ -61,11 +62,10 @@ const upload = async (dirName: string, title: string) => {
         tid: config.get('UploaderInfo.tid'),
         tag: config.get('UploaderInfo.tags').join(','),
         desc: config.get('UploaderInfo.desc'),
-        dtime: 1618502100,
-        source: config.get('UploaderInfo.source'),
-        cover: config.get('UploaderInfo.cover'),
+        source: config.get('UploaderInfo.copyright') == 2 ? `https://live.bilibili.com/${config.get('StreamInfo.room_id')}` : '',
+        cover: '',
         no_reprint: config.get('UploaderInfo.no_reprint') || 1,
-        open_elec: config.get('UploaderInfo.open_elec') || 0,
+        open_elec: config.get('UploaderInfo.open_elec') || 1,
         videos: []
     }
     logger.info(`开始上传稿件 ${dirName}`)
@@ -79,8 +79,8 @@ const upload = async (dirName: string, title: string) => {
         })
     }
 
-    const {data: {myinfo}} = await got.get('https://member.bilibili.com/x/web/archive/pre?lang=cn',{timeout: 5}).json()
-    const {data} = await got.get('https://member.bilibili.com/x/web/index/stat',{timeout: 5}).json()
+    const {data: {myinfo}} = await got.get('https://member.bilibili.com/x/web/archive/pre?lang=cn').json()
+    const {data} = await got.get('https://member.bilibili.com/x/web/index/stat').json()
     myinfo.total_info = data
     let user_weight = myinfo.level > 3 && myinfo.total_info && myinfo.total_info.total_fans > 100 ? 2 : 1;
     user_weight == 2 ? logger.info(`用户权重: ${user_weight} => 网页端分p数量不受限制使用网页端api提交`) : logger.info(`用户权重: ${user_weight} => 网页端分p数量受到限制使用客户端api端提交`)
@@ -90,10 +90,7 @@ const upload = async (dirName: string, title: string) => {
             const result = await got.post(user_weight == 2 ? 'https://member.bilibili.com/x/vu/web/add' : 'http://member.bilibili.com/x/vu/client/add', {
                 searchParams: user_weight == 2 ? {
                     csrf: await getCsrf()
-                } : {
-                    access_key: config.get('bilibiliInfo.access_token')
-                },
-                timeout: 5,
+                } : sign({}),
                 json: payload
             }).json()
             // console.log("Upload ended, returns:", ${JSON.stringify(result)})
@@ -111,29 +108,6 @@ const upload = async (dirName: string, title: string) => {
     }
 }
 
-const probe = async () => {
-    const {lines} = await got.get('https://member.bilibili.com/preupload?r=probe').json()
-    logger.info(`线路:${JSON.stringify(lines)}`)
-    let auto_os, data
-    let min_cost = 0
-    data = Buffer.from(`${parseInt(String(1024 * 0.1 * 1024))}`)
-    for (let line in lines) {
-        const start = +new Date()
-        const test = await got.post(`https:${lines[line].probe_url}`, {
-            form: {data}
-        })
-        const cost = (+new Date() - start) / 1000
-        logger.info(`${lines[line].query} ${cost}`)
-        if (test.statusCode != 200) return
-        if (!min_cost || min_cost > cost) {
-            auto_os = lines[line]
-            min_cost = cost
-        }
-    }
-    auto_os.cost = min_cost
-    return auto_os
-}
-
 const upload_video_part = (video_part: any, retryTimes: number) => {
     return new Promise(async (resolve, reject) => {
         const local_file_name = video_part.path
@@ -147,8 +121,7 @@ const upload_video_part = (video_part: any, retryTimes: number) => {
                 access_key: config.get('bilibiliInfo.access_key'),
                 mid: config.get('bilibiliInfo.uid'),
                 profile: 'ugcfr/pc3'
-            },
-            timeout: 5
+            }
         }).json()
 
         const upload_url = pre_upload_data['url']

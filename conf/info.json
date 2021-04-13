@@ -13,8 +13,6 @@
 		"room_id": 0
 	},
 	"UploaderInfo": {
-		"lines": "AUTO",
-		"threads": 3,
 		"uploadLocalFile": true,
 		"deleteLocalFile": true,
 		"videoPartLimitSize": 100,
@@ -26,8 +24,6 @@
 			"直播录像"
 		],
 		"desc": "",
-		"source": "",
-		"cover": "",
 		"no_reprint": 1,
 		"open_elec": 1
 	},
