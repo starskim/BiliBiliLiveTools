@@ -13,14 +13,23 @@
 		"room_id": 0
 	},
 	"UploaderInfo": {
-		"uname": "",
 		"lines": "AUTO",
 		"threads": 3,
 		"uploadLocalFile": true,
 		"deleteLocalFile": true,
 		"videoPartLimitSize": 100,
+		"copyright": 1,
+		"title": "",
 		"tid": 27,
-		"tags": ["录播", "直播录像"]
+		"tags": [
+			"录播",
+			"直播录像"
+		],
+		"desc": "",
+		"source": "",
+		"cover": "",
+		"no_reprint": 1,
+		"open_elec": 1
 	},
 	"DingTalk": {
 		"webhook": "",
