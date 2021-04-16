@@ -27,20 +27,20 @@ const logger = (name: string | undefined) => {
     const logger = log4js.getLogger(name);
 
     return {
-        debug(message: any, context = []) {
-            logger.debug(`${chalk.cyan('DEBUG')} ${message} ${context}`);
+        debug(message: any, ...args: any[]) {
+            logger.debug(`${chalk.cyan('DEBUG')} ${message} ${args}`);
         },
-        info(message: any, context = []) {
-            logger.info(`${chalk.cyan('INFO')} ${message} ${context}`);
+        info(message: any, ...args: any[]) {
+            logger.info(`${chalk.cyan('INFO')} ${message} ${args}`);
         },
-        notice(message: any, context = []) {
-            logger.info(`${chalk.green('NOTICE')} ${message} ${context}`);
+        notice(message: any, ...args: any[]) {
+            logger.info(`${chalk.green('NOTICE')} ${message} ${args}`);
         },
-        warning(message: any, context = []) {
-            logger.warn(`${chalk.yellow('WARNING')} ${message} ${context}`);
+        warning(message: any, ...args: any[]) {
+            logger.warn(`${chalk.yellow('WARNING')} ${message} ${args}`);
         },
-        error(message: any, context = []) {
-            logger.error(`${chalk.red('ERROR')} ${message} ${context}`)
+        error(message: any, ...args: any[]) {
+            logger.error(`${chalk.red('ERROR')} ${message} ${args}`)
         },
         connectToLiveRoom(status: string, roomId: any, uid: any) {
             if (status === 'ok') {

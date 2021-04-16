@@ -13,7 +13,7 @@ const _got = got.extend({
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36',
         'Accept': '*/*',
         'Accept-Language': 'zh-cn',
-        // 'Connection': 'keep-alive',
+        'Connection': 'keep-alive',
         // 'Referer': `https://live.bilibili.com/${config.get('room_id')}`,
     },
 
@@ -22,7 +22,7 @@ const _got = got.extend({
     hooks: {
         beforeRequest: [
             (options: { headers: any; method: any; url: any; }) => {
-                // logger.debug(options.headers)
+                // logger.debug(JSON.stringify(options.headers))
                 logger.debug(`${chalk.cyan(options.method)} ${chalk.yellow(options.url)}`)
             }
         ],
