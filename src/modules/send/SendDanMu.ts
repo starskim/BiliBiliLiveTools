@@ -33,7 +33,7 @@ const privateSendMsg = async (content: string) => {
     if (response.code == 0) {
         logger.info('弹幕发送成功!')
     } else {
-        logger.warn(`弹幕发送失败, CODE -> ${response.code} MSG -> ${response.msg} "`)
+        logger.warning(`弹幕发送失败, CODE -> ${response.code} MSG -> ${response.msg} "`)
     }
 }
 
@@ -43,6 +43,5 @@ const main = async (content: string) => {
 
 export default (content: string) => {
     return main(content)
-        .catch(error => logger.error(error.message))
 }
 
