@@ -1,8 +1,8 @@
 // const Mirai = require('node-mirai-sdk');
 // const crypto = require('crypto')
 // import * as Live from 'bilibili-live-ws'
-import got from "../utils/got"
-import sign from "../utils/sign"
+// import got from "../utils/got"
+// import sign from "../utils/sign"
 // import config from "../utils/config"
 // import sleep from "../utils/sleep"
 // import {getCsrf} from "../modules/User"
@@ -11,9 +11,9 @@ import sign from "../utils/sign"
 // import auth from "../modules/Auth"
 // import uploader from "../modules/uploader"
 // import * as chalk from 'chalk'
-import * as fs from "fs"
-import * as FormData from 'form-data'
-
+// import * as fs from "fs"
+// import * as FormData from 'form-data'
+import sendanmu from '../modules/send/SendDanMu'
 // const rootPath = process.cwd();
 
 
@@ -45,6 +45,7 @@ const logger = require('../utils/logger').logger('测试')
 logger.debug('测试')
 const test = async () => {
     // await auth()
+    await sendanmu('test')
     // const live = new Live.KeepLiveTCP(230890)
     // live.on('live', () => logger.info('连接到直播间'))
     // live.on('live', () => {
@@ -202,17 +203,17 @@ const test = async () => {
     //     })
     // })
     // await uploader('/Users/liskims/project/BiliBiliLiveTools/download/测试/2021-04-01', `【${config.get('UploaderInfo.title')}】2021-04-01`)
-    const form = new FormData();
-    form.append('file', fs.createReadStream('/Users/liskims/Downloads/a1e904c5ac9ea09599490c71bd5364264893e24e.jpg'), {
-        filename: 'cover.png',
-        contentType: 'image/png'
-    })
-    console.log(form)
-    const body = await got.post('http://member.bilibili.com/x/vu/client/cover/up', {
-        searchParams: sign({}),
-        body: form
-    }).json()
-    console.log(body.data.url)
+    // const form = new FormData();
+    // form.append('file', fs.createReadStream('/Users/liskims/Downloads/a1e904c5ac9ea09599490c71bd5364264893e24e.jpg'), {
+    //     filename: 'cover.png',
+    //     contentType: 'image/png'
+    // })
+    // console.log(form)
+    // const body = await got.post('http://member.bilibili.com/x/vu/client/cover/up', {
+    //     searchParams: sign({}),
+    //     body: form
+    // }).json()
+    // console.log(body.data.url)
     // 举报评论
     // const payload={
     //     oid:289918520,
