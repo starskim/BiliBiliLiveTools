@@ -13,7 +13,6 @@ import {CookieJar} from 'tough-cookie'
 import {promisify} from "util";
 
 const logger = require('../../utils/logger').logger('Uploader')
-let payload
 const videoPartLimitSize = 1024 * 1024 * config.get('UploaderInfo.videoPartLimitSize') || 1024 * 1024 * 8
 const videoPartLimitInput = config.get('UploaderInfo.videoPartLimitSize')
 const cookieJar = new CookieJar()
@@ -73,8 +72,11 @@ const upload = async (dirName: string, title: string) => {
         video_part.server_file_name = await upload_video_part(video_part, 5)
         logger.debug(`function upload server_file_name: ${video_part.server_file_name}`)
         video_part.server_file_name && payload.videos.push({
+            // @ts-ignore
             desc: video_part.desc,
+            // @ts-ignore
             filename: video_part.server_file_name,
+            // @ts-ignore
             title: video_part.title
         })
     }
@@ -86,7 +88,6 @@ const upload = async (dirName: string, title: string) => {
     user_weight == 2 ? logger.info(`用户权重: ${user_weight} => 网页端分p数量不受限制使用网页端api提交`) : logger.info(`用户权重: ${user_weight} => 网页端分p数量受到限制使用客户端api端提交`)
     for (let i = 1; i <= 5; i++) {
         try {
-            logger.debug(JSON.stringify(payload))
             const result = await got.post(user_weight == 2 ? 'https://member.bilibili.com/x/vu/web/add' : 'http://member.bilibili.com/x/vu/client/add', {
                 searchParams: user_weight == 2 ? {
                     csrf: await getCsrf()
@@ -153,7 +154,7 @@ const upload_video_part = (video_part: any, retryTimes: number) => {
                 logger.info(`正在上传 ${local_file_name} 第 ${nowChunk}/${chunkNum} 分块`)
                 fileStream.pause()
                 try {
-                    await upload_chunk(upload_url, server_file_name, readBuffers, readLength, nowChunk, chunkNum, retryTimes)
+                    await upload_chunk(upload_url, server_file_name, local_file_name, readBuffers, readLength, nowChunk, chunkNum, retryTimes)
                 } catch (error) {
                     return reject(`An error occurred when upload video part: ${error}`)
                 }
@@ -165,7 +166,7 @@ const upload_video_part = (video_part: any, retryTimes: number) => {
             }
         })
         fileStream.on('end', async () => {
-            payload = {
+            const payload = {
                 chunks: chunkNum,
                 filesize: fileSize,
                 md5: fileHash.digest('hex'),
@@ -199,18 +200,22 @@ const upload_video_part = (video_part: any, retryTimes: number) => {
     })
 }
 
-const upload_chunk = async (upload_url: any, server_file_name: any, chunk_data: (string | Buffer)[] | readonly Uint8Array[], chunk_size: number, chunk_id: number, chunk_total_num: number, retryTimes: number) => {
+const upload_chunk = async (upload_url: string, server_file_name: any, local_file_name: any, chunk_data: (string | Buffer)[] | readonly Uint8Array[], chunk_size: number, chunk_id: number, chunk_total_num: number, retryTimes: number) => {
     let chunkHash = crypto.createHash('md5')
     for (let v of chunk_data) {
         chunkHash.update(v)
     }
-    payload = new FormData()
+    const payload = new FormData()
     payload.append('version', '2.3.0.1063')
     payload.append('filesize', chunk_size)
     payload.append('chunk', chunk_id)
     payload.append('chunks', chunk_total_num)
     payload.append('md5', chunkHash.digest('hex'))
-    payload.append('file', Buffer.concat(chunk_data), 'application/octet-stream')
+    // @ts-ignore
+    payload.append('file', Buffer.concat(chunk_data), {
+        filename: local_file_name,
+        contentType: 'application/octet-stream'
+    })
     await setCookie(`PHPSESSID=${server_file_name}`, upload_url);
     for (let i = 1; i <= retryTimes; i++) {
         try {
