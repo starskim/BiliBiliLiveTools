@@ -12,20 +12,20 @@ const sendMsg = async (content: any) => {
     const user_info = await getCsrf();
 
     payload = {
-        color: 16777215,
-        fontsize: 25,
-        mode: 1,
+        bubble: 0,
         msg: content,
-        rnd: 0,
+        color: 16777215,
+        mode: 1,
+        fontsize: 25,
+        rnd: Date.now(),
         roomid: config.get('StreamInfo.room_id'),
         csrf: user_info,
         csrf_token: user_info,
-    };
-    const body = await got.post('https://api.live.bilibili.com/msg/send', {
+    }
+    
+    return got.post('https://api.live.bilibili.com/msg/send', {
         form: sign(payload)
     }).json()
-
-    return body
 }
 
 const privateSendMsg = async (content: string) => {
