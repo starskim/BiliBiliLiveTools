@@ -1,7 +1,7 @@
 import got from "../../utils/got"
-import config from "../../utils/config";
+import config from "../../utils/config"
+import * as crypto from 'crypto'
 
-const crypto = require('crypto');
 const logger = require('../../utils/logger').logger('SendDingTalk')
 
 let payload;
@@ -23,7 +23,7 @@ const privateSendMsg = async (content: string) => {
     if (response.errcode == 0) {
         logger.info('钉钉推送成功!')
     } else {
-        logger.warn(`钉钉推送失败, CODE -> ${response.errcode} MSG -> ${response.errmsg} "`)
+        logger.warning(`钉钉推送失败, CODE -> ${response.errcode} MSG -> ${response.errmsg} "`)
     }
 }
 
