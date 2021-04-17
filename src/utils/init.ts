@@ -27,6 +27,7 @@ const init = () => {
                 tid: process.env.TID || 27,
                 tags: process.env.TAGS ? process.env.TAGS.split(',') : ['录播', '直播录像'],
                 desc: process.env.DESC || '',
+                cover: process.env.COVER || '',
                 no_reprint: process.env.NO_REPRINT || 1,
                 open_elec: process.env.OPEN_ELEC || 0
             },

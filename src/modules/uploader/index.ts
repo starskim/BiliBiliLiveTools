@@ -62,7 +62,7 @@ const upload = async (dirName: string, title: string) => {
         tag: config.get('UploaderInfo.tags').join(','),
         desc: config.get('UploaderInfo.desc'),
         source: config.get('UploaderInfo.copyright') == 2 ? `https://live.bilibili.com/${config.get('StreamInfo.room_id')}` : '',
-        cover: '',
+        cover: await upload_cover(),
         no_reprint: config.get('UploaderInfo.no_reprint') || 1,
         open_elec: config.get('UploaderInfo.open_elec') || 1,
         videos: []
@@ -107,6 +107,24 @@ const upload = async (dirName: string, title: string) => {
             await sleep(10000)
         }
     }
+}
+
+const upload_cover = async () => {
+    if (config.get('UploaderInfo.cover')) {
+        if (fs.statSync(config.get('UploaderInfo.cover')).isFile()) {
+            const payload = new FormData();
+            payload.append('file', config.get('UploaderInfo.cover'), {
+                filename: 'cover.png',
+                contentType: 'image/png'
+            })
+            const {data: {url}} = await got.post('http://member.bilibili.com/x/vu/client/cover/up', {
+                searchParams: sign({}),
+                body: payload
+            }).json()
+            return url
+        }
+    }
+    return ''
 }
 
 const upload_video_part = (video_part: any, retryTimes: number) => {
