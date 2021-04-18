@@ -8,7 +8,7 @@ const logger = require('../utils/logger').logger('Live')
 
 let payload;
 
-//检查登录
+//检查直播房间号
 const checkRoomId = async () => {
     logger.info('检查直播房间号')
     const room_id = config.get('StreamInfo.room_id')
