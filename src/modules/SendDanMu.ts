@@ -1,7 +1,7 @@
-import got from "../../utils/got";
-import sign from "../../utils/sign";
-import {getCsrf} from '../User'
-import config from "../../utils/config";
+import got from "utils/got";
+import sign from "utils/sign";
+import {getCsrf} from './User'
+import config from "utils/config";
 
 const logger = require('../../utils/logger').logger('SendDanMu')
 
@@ -22,7 +22,7 @@ const sendMsg = async (content: any) => {
         csrf: user_info,
         csrf_token: user_info,
     }
-    
+
     return got.post('https://api.live.bilibili.com/msg/send', {
         form: sign(payload)
     }).json()

@@ -3,17 +3,19 @@
 // import * as Live from 'bilibili-live-ws'
 // import got from "../utils/got"
 // import sign from "../utils/sign"
-import config from "../utils/config"
+// import config from "../utils/config"
 // import sleep from "../utils/sleep"
 // import {getCsrf} from "../modules/User"
 // import auth from "../modules/auth"
 // import Live from "../modules/Live"
 // import auth from "../modules/Auth"
-import uploader from "../modules/uploader"
+// import uploader from "../modules/uploader"
 // import * as chalk from 'chalk'
 // import * as fs from "fs"
 // import * as FormData from 'form-data'
 // import sendanmu from '../modules/send/SendDanMu'
+// import SendDingTalk from "../modules/send/SendDingTalk";
+import Notice from "../modules/Notice"
 // const rootPath = process.cwd();
 
 
@@ -202,7 +204,9 @@ const test = async () => {
     //         )
     //     })
     // })
-    await uploader('/Users/liskims/project/BiliBiliLiveTools/download/测试/2021-04-01', `【${config.get('UploaderInfo.title')}】2021-04-01`)
+    // await SendDingTalk('test')
+    await Notice('test', 'test')
+    // await uploader('/Users/liskims/project/BiliBiliLiveTools/download/测试/2021-04-01', `【${config.get('UploaderInfo.title')}】2021-04-01`)
     // let test
     // if (config.get('UploaderInfo.cover')) {
     //     if (fs.statSync(config.get('UploaderInfo.cover')).isFile()) {

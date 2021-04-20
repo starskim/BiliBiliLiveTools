@@ -7,7 +7,9 @@ const init = () => {
     if (config.get('version') !== version.version) {
         config.store = {
             version: version.version,
-            debug: envs.DEBUG === 'true',
+            debug: envs.DEBUG || false,
+            Use_Proxy: envs.USE_PROXY || '',
+            Network_Proxy: envs.NETWORK_PROXY || '',
             bilibiliInfo: {
                 uid: '',
                 username: envs.USERNAME || '',
@@ -32,9 +34,26 @@ const init = () => {
                 no_reprint: envs.NO_REPRINT || 1,
                 open_elec: envs.OPEN_ELEC || 0
             },
-            DingTalk: {
-                webhook: envs.DINGTALKWEBHOOK || '',
-                secret: envs.DINGTALKSECRET || '',
+            Notice: {
+                Use_Notice: envs.USE_NOTIFY || false,
+                SctKey: envs.NOTIFY_SCTKEY || '',
+                ScKey: envs.NOTIFY_SCKEY || '',
+                Tele: {
+                    BotToken: envs.NOTIFY_TELE_BOTTOKEN || '',
+                    ChatId: envs.NOTIFY_TELE_CHATID || ''
+                },
+                DingTalk: {
+                    Token: envs.NOTIFY_DINGTALK_TOKEN || '',
+                    Secret: envs.NOTIFY_DINGTALK_SECRET || '',
+                },
+                PushPlus: {
+                    Token: envs.NOTIFY_PUSHPLUS_TOKEN || ''
+                },
+                Cq: {
+                    Url: envs.NOTIFY_CQ_URL || '',
+                    Token: envs.NOTIFY_CQ_TOKEN || '',
+                    QQ: envs.NOTIFY_CQ_QQ || ''
+                }
             },
         }
     }

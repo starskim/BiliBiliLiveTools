@@ -1,6 +1,8 @@
 {
 	"version": "0.0.0",
 	"debug": true,
+	"Use_Proxy": false,
+	"Network_Proxy": "",
 	"bilibiliInfo": {
 		"uid": 0,
 		"username": "",
@@ -27,8 +29,25 @@
 		"no_reprint": 1,
 		"open_elec": 1
 	},
-	"DingTalk": {
-		"webhook": "",
-		"secret": ""
+	"Notice": {
+		"Use_Notice": true,
+		"SctKey": "",
+		"ScKey": "",
+		"Tele": {
+			"BotToken": "",
+			"ChatId": ""
+		},
+		"DingTalk": {
+			"Token": "",
+			"Secret": ""
+		},
+		"PushPlus": {
+			"Token": ""
+		},
+		"Cq": {
+			"Url": "",
+			"Token": "",
+			"QQ": ""
+		}
 	}
 }

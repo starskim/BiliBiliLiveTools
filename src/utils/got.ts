@@ -1,12 +1,26 @@
 const got = require('got')
 import * as chalk from 'chalk'
+import config from "./config";
 
+const {HttpsProxyAgent} = require('hpagent');
 const logger = require('../utils/logger').logger('Got')
-
 const CookieStore = require('tough-cookie-file-store').FileCookieStore
 const CookieJar = require('tough-cookie').CookieJar
-
 const cookieJar = new CookieJar(new CookieStore('./conf/cookie.json'))
+let agent
+
+if (config.get('Use_Proxy')) {
+    agent = {
+        https: new HttpsProxyAgent({
+            keepAlive: true,
+            keepAliveMsecs: 1000,
+            maxSockets: 256,
+            maxFreeSockets: 256,
+            scheduling: 'lifo',
+            proxy: config.get('Network_Proxy')
+        })
+    }
+}
 
 const _got = got.extend({
     headers: {
@@ -16,6 +30,7 @@ const _got = got.extend({
         'Connection': 'keep-alive',
         // 'Referer': `https://live.bilibili.com/${config.get('room_id')}`,
     },
+    agent,
 
     cookieJar,
     timeout: 20000,

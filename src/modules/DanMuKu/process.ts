@@ -1,7 +1,7 @@
-import SendDingTalk from "../send/SendDingTalk";
+import Notice from "../Notice";
 
-const logger = require('../../utils/logger').Danmu()
-const logger1 = require('../../utils/logger').logger('DanMu_Debug')
+const logger = require('utils/logger').Danmu()
+const logger1 = require('utils/logger').logger('DanMu_Debug')
 
 const main = async (msg: any, online: any) => {
     let UserName
@@ -13,13 +13,11 @@ const main = async (msg: any, online: any) => {
     switch (msg.cmd) {
         case 'LIVE':
             // 直播开始
-            await SendDingTalk(`${msg.roomid} 开播了！！！！`)
-            await SendDingTalk(`${msg.roomid} 开播了！！！！`)
-            await SendDingTalk(`${msg.roomid} 开播了！！！！`)
+            await Notice('LIVE', msg.roomid)
             break
         case 'PREPARING':
             // 直播结束
-            await SendDingTalk(`${msg.roomid} 下播了`)
+            await Notice('PREPARING', msg.roomid)
             break
         case 'DANMU_MSG':
             // 用户发送弹幕
@@ -131,9 +129,9 @@ const main = async (msg: any, online: any) => {
             logger.warning(`超管警告：${msg.msg}`)
             logger.warning(`超管警告：${msg.msg}`)
             logger.warning(`超管警告：${msg.msg}`)
-            await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
-            await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
-            await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            // await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            // await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            // await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
             break
         case 'CUT_OFF':
             // 超管切断
@@ -141,9 +139,9 @@ const main = async (msg: any, online: any) => {
             logger.warning(`超管切断直播：${msg.msg}`)
             logger.warning(`超管切断直播：${msg.msg}`)
             logger.warning(`超管切断直播：${msg.msg}`)
-            await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
-            await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
-            await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            // await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            // await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            // await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
             break
         default:
             logger1.debug(JSON.stringify(msg))
