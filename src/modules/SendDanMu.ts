@@ -1,9 +1,9 @@
 import got from "utils/got";
 import sign from "utils/sign";
-import {getCsrf} from './User'
+import {getCsrf} from 'utils'
 import config from "utils/config";
 
-const logger = require('../../utils/logger').logger('SendDanMu')
+const logger = require('utils/logger').logger('SendDanMu')
 
 let payload;
 

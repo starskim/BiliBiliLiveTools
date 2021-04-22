@@ -1,8 +1,8 @@
 import config from "utils/config"
 import got from "utils/got"
 import * as crypto from 'crypto'
+import * as moment from 'moment'
 
-const sd = require('silly-datetime')
 const logger = require('utils/logger').logger('Notice')
 let url
 let payload
@@ -13,7 +13,7 @@ export default async (type: string, result: string) => {
 }
 
 const sendInfoHandle = async (type: string, result: string) => {
-    const now_time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    const now_time = moment().format('YYYY-MM-DD HH:mm:ss')
     let info: any
     switch (type) {
         case 'LIVE':

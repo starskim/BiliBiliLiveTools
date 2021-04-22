@@ -1,6 +1,6 @@
 import * as chalk from 'chalk'
 import * as log4js from "log4js"
-import config from "../utils/config"
+import config from "utils/config"
 
 const logStatus = config.get('debug') ? "debug" : "info";
 
@@ -28,19 +28,19 @@ const logger = (name: string | undefined) => {
 
     return {
         debug(message: any, ...args: any[]) {
-            logger.debug(`${chalk.cyan('DEBUG')} ${message} ${args}`);
+            args ? logger.debug(`${chalk.cyan('DEBUG')} ${message}`) : logger.debug(`${chalk.cyan('DEBUG')} ${message}`, args)
         },
         info(message: any, ...args: any[]) {
-            logger.info(`${chalk.cyan('INFO')} ${message} ${args}`);
+            args ? logger.info(`${chalk.cyan('INFO')} ${message}`) : logger.info(`${chalk.cyan('INFO')} ${message}`, args)
         },
         notice(message: any, ...args: any[]) {
-            logger.info(`${chalk.green('NOTICE')} ${message} ${args}`);
+            args ? logger.info(`${chalk.green('NOTICE')} ${message}`) : logger.info(`${chalk.green('NOTICE')} ${message}`, args)
         },
         warning(message: any, ...args: any[]) {
-            logger.warn(`${chalk.yellow('WARNING')} ${message} ${args}`);
+            args ? logger.warn(`${chalk.yellow('WARNING')} ${message}`) : logger.warn(`${chalk.yellow('WARNING')} ${message}`, args)
         },
         error(message: any, ...args: any[]) {
-            logger.error(`${chalk.red('ERROR')} ${message} ${args}`)
+            args ? logger.error(`${chalk.red('ERROR')} ${message}`) :logger.error(`${chalk.red('ERROR')} ${message}`, args)
         },
         connectToLiveRoom(status: string, roomId: any, uid: any) {
             if (status === 'ok') {

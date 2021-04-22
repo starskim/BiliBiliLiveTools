@@ -1,18 +1,18 @@
 import * as fs from "fs"
 import {join} from "path"
 import {VideoPart} from './VideoPart'
-import {getCsrf} from "../User"
-import config from "../../utils/config"
+import {getCsrf} from "utils"
+import config from "utils/config"
 import * as chalk from 'chalk'
-import got from "../../utils/got"
-import sign from "../../utils/sign"
+import got from "utils/got"
+import sign from "utils/sign"
 import * as crypto from 'crypto'
-import sleep from "../../utils/sleep"
+import sleep from "utils/sleep"
 import * as FormData from 'form-data'
 import {CookieJar} from 'tough-cookie'
 import {promisify} from "util";
 
-const logger = require('../../utils/logger').logger('Uploader')
+const logger = require('utils/logger').logger('Uploader')
 const videoPartLimitSize = 1024 * 1024 * config.get('UploaderInfo.videoPartLimitSize') || 1024 * 1024 * 8
 const videoPartLimitInput = config.get('UploaderInfo.videoPartLimitSize')
 const cookieJar = new CookieJar()

@@ -26,11 +26,12 @@
 			"直播录像"
 		],
 		"desc": "",
+		"cover": "",
 		"no_reprint": 1,
 		"open_elec": 1
 	},
 	"Notice": {
-		"Use_Notice": true,
+		"Use_Notice": "true",
 		"SctKey": "",
 		"ScKey": "",
 		"Tele": {

@@ -12,7 +12,7 @@ const sign = (data: any) => {
         access_key: config.get('bilibiliInfo.access_token', ''),
         appkey,
         platform: 'pc',
-        ts: Date.now(),
+        ts: Math.round(Date.now() / 1000),
     };
 
     data = {

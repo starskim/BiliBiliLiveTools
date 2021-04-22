@@ -8,6 +8,7 @@
 // import {getCsrf} from "../modules/User"
 // import auth from "../modules/auth"
 // import Live from "../modules/Live"
+// import DanMuInfo from "modules/DanMuKu"
 // import auth from "../modules/Auth"
 // import uploader from "../modules/uploader"
 // import * as chalk from 'chalk'
@@ -15,11 +16,12 @@
 // import * as FormData from 'form-data'
 // import sendanmu from '../modules/send/SendDanMu'
 // import SendDingTalk from "../modules/send/SendDingTalk";
-import Notice from "../modules/Notice"
+// import Notice from "modules/Notice"
+// import {getRoomInfo} from "utils"
 // const rootPath = process.cwd();
 
 
-const logger = require('../utils/logger').logger('测试')
+const logger = require('utils/logger').logger('测试')
 
 // const bot = new Mirai({
 //     host: 'http://10.0.0.252:8081',
@@ -205,7 +207,7 @@ const test = async () => {
     //     })
     // })
     // await SendDingTalk('test')
-    await Notice('test', 'test')
+    // await Notice('test', 'test')
     // await uploader('/Users/liskims/project/BiliBiliLiveTools/download/测试/2021-04-01', `【${config.get('UploaderInfo.title')}】2021-04-01`)
     // let test
     // if (config.get('UploaderInfo.cover')) {
@@ -234,10 +236,24 @@ const test = async () => {
     //     csrf: await getCsrf()
     // }
     // const body =await got.post('http://api.bilibili.com/x/v2/reply/report',{})
+    // DanMuInfo()
+    // await getRoomInfo()
+    // logger.debug(new Date())
+    process.on('uncaughtException', (error => {
+        logger.error("exception caught: ", error)
+    }))
+    process.on('SIGINT', () => {
+        logger.info("Receive exit signal, the process will exit after 3 seconds.")
+        logger.info("Process exited by user.")
+
+        setTimeout(() => {
+            process.exit()
+        }, 3000)
+    })
 }
 
 
-test()
+test().catch(error => logger.error(error.message))
 //     .then(console.log)
 //     .catch(error => {
 //     logger.error(error)

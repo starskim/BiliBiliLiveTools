@@ -8,7 +8,7 @@ const init = () => {
         config.store = {
             version: version.version,
             debug: envs.DEBUG || false,
-            Use_Proxy: envs.USE_PROXY || '',
+            Use_Proxy: envs.USE_PROXY || false,
             Network_Proxy: envs.NETWORK_PROXY || '',
             bilibiliInfo: {
                 uid: '',
@@ -23,7 +23,7 @@ const init = () => {
             },
             UploaderInfo: {
                 uploadLocalFile: envs.UPLOADLOCALFILE || true,
-                deleteLocalFile: envs.DELETELOCALFILE || false,
+                deleteLocalFile: envs.DELETELOCALFILE || true,
                 videoPartLimitSize: envs.VIDEOPARTLIMITSIZE || 100,
                 copyright: envs.COPYRIGHT || 2,
                 title: envs.TITLE || '',

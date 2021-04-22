@@ -1,10 +1,11 @@
 import * as crypto from 'crypto'
-import got from '../utils/got'
-import share from "../utils/share"
-import sign from "../utils/sign"
-import config from "../utils/config"
+import got from 'utils/got'
+import share from "utils/share"
+import sign from "utils/sign"
+import config from "utils/config"
+import * as moment from 'moment'
 
-const logger = require('../utils/logger').logger('Auth')
+const logger = require('utils/logger').logger('Auth')
 
 let payload
 
@@ -15,11 +16,13 @@ const checkToken = async () => {
     payload = {
         access_token: config.get('bilibiliInfo.access_token', ''),
     }
-    const body = await got.get('https://passport.bilibili.com/api/v2/oauth2/info', {
+    const {code, ts, data} = await got.get('https://passport.bilibili.com/api/v2/oauth2/info', {
         searchParams: sign(payload)
     }).json()
 
-    if (body.code || body.data.expires_in < 14400) {
+    logger.info(`令牌有效期: ${moment.unix(ts + data.expires_in).format('YYYY-MM-DD HH:mm:ss')}`)
+
+    if (code || data.expires_in < 14400) {
         logger.warning('检测到 Token 需要更新')
 
         const status = await refreshToken()
@@ -38,18 +41,21 @@ const refreshToken = async () => {
         access_token: config.get('bilibiliInfo.access_token'),
         refresh_token: config.get('bilibiliInfo.refresh_token'),
     };
-    const body = await got.post('https://passport.bilibili.com/api/oauth2/refreshToken', {
+    const {
+        code,
+        data: {access_token, refresh_token}
+    } = await got.post('https://passport.bilibili.com/api/oauth2/refreshToken', {
         form: sign(payload)
     }).json()
 
-    if (body.code) {
+    if (code) {
         config.set('bilibiliInfo.access_token', '')
         config.set('bilibiliInfo.refresh_token', '')
         return false
     }
     logger.notice('Token 刷新成功')
-    config.set('bilibiliInfo.access_token', body.data.access_token)
-    config.set('bilibiliInfo.refresh_token', body.data.refresh_token)
+    config.set('bilibiliInfo.access_token', access_token)
+    config.set('bilibiliInfo.refresh_token', refresh_token)
     return true
 }
 
@@ -58,23 +64,23 @@ const checkLogin = async () => {
     logger.info('检查登录')
     const user = config.get('bilibiliInfo.username')
     const pass = config.get('bilibiliInfo.password')
-    if (user === "" || pass === "") throw new Error('空白的帐号和口令')
+    if (!user || !pass) throw new Error('空白的帐号和口令')
     await loginPassword()
 }
 
 // 账密登录
 const loginPassword = async () => {
-    const data = await getPublicKey()
+    const {hash, key} = await getPublicKey()
 
     logger.info('正在尝试使用用户名、密码登录')
 
     const username = config.get('bilibiliInfo.username');
     const password = crypto.publicEncrypt(
         {
-            key: data.key,
+            key,
             padding: 1,
         },
-        Buffer.from(`${data.hash}${config.get('bilibiliInfo.password')}`) // eslint-disable-line
+        Buffer.from(`${hash}${config.get('bilibiliInfo.password')}`) // eslint-disable-line
     ).toString('base64');
 
     payload = {
@@ -88,15 +94,18 @@ const loginPassword = async () => {
         challenge: '',
     }
 
-    const body = await got.post('https://passport.bilibili.com/api/v3/oauth2/login', {
+    const {
+        code,
+        data: {status, token_info: {access_token, refresh_token}}
+    } = await got.post('https://passport.bilibili.com/api/v3/oauth2/login', {
         form: sign(payload),
     }).json()
 
-    if (body.code || body.data.status) throw new Error('登录失败')
+    if (code || status) throw new Error('登录失败')
     logger.info('登录成功')
 
-    config.set('bilibiliInfo.access_token', body.data.token_info.access_token)
-    config.set('bilibiliInfo.refresh_token', body.data.token_info.refresh_token)
+    config.set('bilibiliInfo.access_token', access_token)
+    config.set('bilibiliInfo.refresh_token', refresh_token)
 }
 
 //获取公钥
@@ -104,22 +113,22 @@ const getPublicKey = async () => {
     logger.info('正在获取公钥')
 
     payload = {};
-    const body = await got.post('https://passport.bilibili.com/api/oauth2/getKey', {
+    const {code, data} = await got.post('https://passport.bilibili.com/api/oauth2/getKey', {
         form: sign(payload)
     }).json()
 
-    if (body.code) throw new Error('公钥获取失败')
+    if (code) throw new Error('公钥获取失败')
     logger.notice('公钥获取成功')
-    return body.data
+    return data
 }
 
 //检查 Cookie 是否过期
 const checkCookie = async () => {
     logger.info('检查 Cookie 是否过期')
 
-    const body = await getUserInfo();
+    const code = await getUserInfo();
 
-    if (body.code !== 'REPONSE_OK') {
+    if (code !== 'REPONSE_OK') {
         logger.warning('检测到 Cookie 已经过期')
         logger.info('正在刷新 Cookie')
         await got.get('https://passport.bilibili.com/api/login/sso', {searchParams: sign({})})
@@ -130,16 +139,16 @@ const checkCookie = async () => {
 
 //获取用户信息
 const getUserInfo = async () => {
-    const body = await got.get('https://api.live.bilibili.com/User/getUserInfo', {
+    const {code, data: {uid}} = await got.get('https://api.live.bilibili.com/User/getUserInfo', {
         searchParams: {
-            ts: Date.now()
+            ts: Math.round(Date.now() / 1000)
         }
     }).json()
 
     // 获取UID
-    if (body.code === 'REPONSE_OK') config.set('bilibiliInfo.uid', body.data.uid)
+    if (code === 'REPONSE_OK') config.set('bilibiliInfo.uid', uid)
 
-    return body
+    return code
 }
 
 

@@ -1,12 +1,12 @@
 import {KeepLiveTCP} from 'bilibili-live-ws/src'
 import * as type from 'typedi'
-import config from "../../utils/config"
+import config from "utils/config"
 import process from "./process"
 
-const logger = require('../../utils/logger').logger('DanMuInfo')
+const logger = require('utils/logger').logger('DanMuInfo')
 
 //远行
-const main = () => {
+export default () => {
     const live = new KeepLiveTCP(config.get('StreamInfo.room_id'))
     let online = 0
     type.Container.set(KeepLiveTCP, live)
@@ -15,8 +15,4 @@ const main = () => {
     live.on('msg', async msg => {
         await process(msg, online)
     })
-}
-
-export default () => {
-    main()
 }

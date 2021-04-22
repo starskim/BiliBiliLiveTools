@@ -9,7 +9,7 @@ const CookieJar = require('tough-cookie').CookieJar
 const cookieJar = new CookieJar(new CookieStore('./conf/cookie.json'))
 let agent
 
-if (config.get('Use_Proxy')) {
+if (config.get('Use_Proxy') == true) {
     agent = {
         https: new HttpsProxyAgent({
             keepAlive: true,
