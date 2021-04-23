@@ -40,7 +40,7 @@ const logger = (name: string | undefined) => {
             args ? logger.warn(`${chalk.yellow('WARNING')} ${message}`) : logger.warn(`${chalk.yellow('WARNING')} ${message}`, args)
         },
         error(message: any, ...args: any[]) {
-            args ? logger.error(`${chalk.red('ERROR')} ${message}`) :logger.error(`${chalk.red('ERROR')} ${message}`, args)
+            args ? logger.error(`${chalk.red('ERROR')} ${message}`) : logger.error(`${chalk.red('ERROR')} ${message}`, args)
         },
         connectToLiveRoom(status: string, roomId: any, uid: any) {
             if (status === 'ok') {
