@@ -3,7 +3,7 @@ import got from 'utils/got'
 import share from "utils/share"
 import sign from "utils/sign"
 import config from "utils/config"
-import * as moment from 'moment'
+import * as dayjs from 'dayjs'
 
 const logger = require('utils/logger').logger('Auth')
 
@@ -20,7 +20,7 @@ const checkToken = async () => {
         searchParams: sign(payload)
     }).json()
 
-    logger.info(`令牌有效期: ${moment.unix(ts + data.expires_in).format('YYYY-MM-DD HH:mm:ss')}`)
+    logger.info(`令牌有效期: ${dayjs.unix(ts + data.expires_in).format('YYYY-MM-DD HH:mm:ss')}`)
 
     if (code || data.expires_in < 14400) {
         logger.warning('检测到 Token 需要更新')
