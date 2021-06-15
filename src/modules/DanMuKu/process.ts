@@ -129,9 +129,10 @@ const main = async (msg: any, online: any) => {
             logger.warning(`超管警告：${msg.msg}`)
             logger.warning(`超管警告：${msg.msg}`)
             logger.warning(`超管警告：${msg.msg}`)
-            // await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
-            // await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
-            // await SendDingTalk(`${msg.roomid} 超管警告：${msg.msg}`)
+            await Notice('DAN_MU_WARNING',msg.msg)
+            break
+        case 'STOP_LIVE_ROOM_LIST':
+            // 直播间下播列表
             break
         case 'CUT_OFF':
             // 超管切断
@@ -139,9 +140,7 @@ const main = async (msg: any, online: any) => {
             logger.warning(`超管切断直播：${msg.msg}`)
             logger.warning(`超管切断直播：${msg.msg}`)
             logger.warning(`超管切断直播：${msg.msg}`)
-            // await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
-            // await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
-            // await SendDingTalk(`${msg.roomid} 超管切断直播！！！`)
+            await Notice('CUT_OFF',msg.msg)
             break
         default:
             logger1.debug(JSON.stringify(msg))
@@ -150,6 +149,4 @@ const main = async (msg: any, online: any) => {
 
 }
 
-export default (msg: any, online: any) => {
-    return main(msg, online)
-}
+export default (msg: any, online: any) => main(msg, online)

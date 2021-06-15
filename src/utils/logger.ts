@@ -11,8 +11,6 @@ log4js.configure({
             type: 'dateFile',
             filename: "logs/Bili",
             pattern: "yyyy-MM-dd.log",
-            maxLogSize: 20971520,
-            backups: 10,
             encoding: "utf-8",
             alwaysIncludePattern: true
 

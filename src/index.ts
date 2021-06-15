@@ -1,16 +1,31 @@
 import module_auth from "modules/Auth"
 import module_danmuku from "modules/DanMuKu"
-import init from "utils/init"
+import module_web from "modules/web/index"
 import {getRoomInfo} from "utils"
+import init from "utils/init"
+import config from "utils/config"
 import sleep from "utils/sleep"
+import * as fs from "fs";
+import {join} from "path";
 
 const logger = require('utils/logger').logger('App')
 
 class App {
+    constructor() {
+        if (!fs.existsSync(join(process.cwd(), '/download'))) {
+            fs.mkdirSync(join(process.cwd(), '/download'))
+        }
+    }
+
     init = async () => {
         this.initUnCaughtException()
         init()
         await this.initExitSignal()
+        if (config.get('connect.port')) {
+            module_web.listen(config.get('connect.port'), parseInt(config.get('connect.listenInaddrAny')) ? undefined : '127.0.0.1')
+            logger.debug(`Listening Port ${config.get('connect.port')}`)
+
+        }
         await getRoomInfo()
         module_danmuku()
         while (true) {

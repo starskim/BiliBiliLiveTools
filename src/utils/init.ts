@@ -9,7 +9,17 @@ const init = () => {
             version: version.version,
             debug: envs.DEBUG || false,
             Use_Proxy: envs.USE_PROXY || false,
-            Network_Proxy: envs.NETWORK_PROXY || '',
+            Network_Proxy: envs.NETWORK_PROXY || 'http://127.0.0.1:6152',
+            connect: {
+                listenInaddrAny: envs.CONNECT_LISTEN_INADDR_ANY || 1,
+                port: envs.CONNECT_PORT || 3000
+            },
+            koishi: {
+                port: envs.KOISHI_PORT || 3001,
+                server: envs.KOISHI_SERVER || '',
+                selfId: envs.KOISHI_SELFID || '',
+                token: envs.KOISHI_TOKEN || ''
+            },
             bilibiliInfo: {
                 uid: '',
                 username: envs.USERNAME || '',

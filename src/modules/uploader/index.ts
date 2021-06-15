@@ -84,7 +84,7 @@ const upload = async (dirName: string, title: string) => {
     const {data: {myinfo}} = await got.get('https://member.bilibili.com/x/web/archive/pre?lang=cn').json()
     const {data} = await got.get('https://member.bilibili.com/x/web/index/stat').json()
     myinfo.total_info = data
-    let user_weight = myinfo.level > 3 && myinfo.total_info && myinfo.total_info.total_fans > 100 ? 2 : 1;
+    let user_weight = myinfo.level > 3 && myinfo.total_info && myinfo.total_info.total_fans > 1e3 ? 2 : 1;
     user_weight == 2 ? logger.info(`用户权重: ${user_weight} => 网页端分p数量不受限制使用网页端api提交`) : logger.info(`用户权重: ${user_weight} => 网页端分p数量受到限制使用客户端api端提交`)
     for (let i = 1; i <= 5; i++) {
         try {

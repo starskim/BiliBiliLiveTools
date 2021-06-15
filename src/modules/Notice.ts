@@ -28,6 +28,18 @@ const sendInfoHandle = async (type: string, result: string) => {
                 content: `[${now_time}] 直播间${result}：下播了`
             }
             break
+        case 'DAN_MU_WARNING':
+            info = {
+                title:'超管警告',
+                content: `[${now_time}] 超管警告：${result}`
+            }
+            break
+        case 'CUT_OFF':
+            info = {
+                title:'超管切断直播',
+                content: `[${now_time}] 超管切断直播：${result}`
+            }
+            break
         default:
             info = {
                 title: '推送消息异常记录',

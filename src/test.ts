@@ -1,9 +1,8 @@
-// const Mirai = require('node-mirai-sdk');
 // const crypto = require('crypto')
 // import * as Live from 'bilibili-live-ws'
 // import got from "../utils/got"
 // import sign from "../utils/sign"
-// import config from "../utils/config"
+import config from "utils/config"
 // import sleep from "../utils/sleep"
 // import {getCsrf} from "../modules/User"
 // import auth from "../modules/auth"
@@ -19,35 +18,20 @@
 // import Notice from "modules/Notice"
 // import {getRoomInfo} from "utils"
 // const rootPath = process.cwd();
-
+import koishi from "modules/koishi"
+import web from "modules/web/index"
 
 const logger = require('utils/logger').logger('测试')
 
-// const bot = new Mirai({
-//     host: 'http://10.0.0.252:8081',
-//     authKey: 'INITKEY8oqXaf7G',
-//     qq: 3517974099,
-//     enableWebsocket: true,
-// });
-
-// auth 认证(*)
-// bot.onSignal('authed', () => {
-//     console.log(`Authed with session key ${bot.sessionKey}`);
-//     bot.verify();
-// });
-
-// session 校验回调
-// bot.onSignal('verified', async () => {
-//     console.log(`Verified with session key ${bot.sessionKey}`);
-//
-//     // 获取好友列表，需要等待 session 校验之后 (verified) 才能调用 SDK 中的主动接口
-//     const friendList = await bot.getFriendList();
-//     console.log(`There are ${friendList.length} friends in bot`);
-//     bot.sendGroupMessage('测试', 778666825)
-// });
-
 logger.debug('测试')
 const test = async () => {
+
+    if (config.get('connect.port')) {
+        web.listen(config.get('connect.port'), parseInt(config.get('connect.listenInaddrAny')) ? undefined : '127.0.0.1')
+        logger.debug('Listening Port ' + config.get('connect.port'))
+
+    }
+    koishi()
     // await auth()
     // await sendanmu('test')
     // const live = new Live.KeepLiveTCP(230890)
@@ -240,7 +224,7 @@ const test = async () => {
     // await getRoomInfo()
     // logger.debug(new Date())
     process.on('uncaughtException', (error => {
-        logger.error("exception caught: ", error)
+        logger.error(`exception caught: ${error}`)
     }))
     process.on('SIGINT', () => {
         logger.info("Receive exit signal, the process will exit after 3 seconds.")
@@ -252,8 +236,7 @@ const test = async () => {
     })
 }
 
-
-test().catch(error => logger.error(error.message))
+test()
 //     .then(console.log)
 //     .catch(error => {
 //     logger.error(error)

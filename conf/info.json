@@ -1,8 +1,18 @@
 {
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"debug": true,
 	"Use_Proxy": false,
-	"Network_Proxy": "",
+	"Network_Proxy": "http://127.0.0.1:6152",
+	"connect": {
+		"listenInaddrAny": 1,
+		"port": 3001
+	},
+	"koishi": {
+		"port": 3002,
+		"server": "ws://localhost:6700",
+		"selfId": "",
+		"token": ""
+	},
 	"bilibiliInfo": {
 		"uid": 0,
 		"username": "",
